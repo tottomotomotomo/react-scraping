@@ -5,20 +5,38 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>react scraping</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <input type="url">
+    <input type="url" id="url">
         <button class="send">
             取得する
         </button>
+
+    <div class="result">
+
+    </div>
 
     <script>
         document
             .querySelector(".send")
             .addEventListener("click", e => {
-                axios.get()
+                const url = document.getElementById("url").value;
+
+                axios.get(`https://ogp-parse-api.herokuapp.com/?url=${url}`)
+                    .then(res => {
+                        // console.log(url);
+                        console.log(res.data.image);
+                        // const image = document.createElement("img");
+                        // image.src = res.data.image;
+                        // image.width = 200;
+                        // document.querySelector(".result").appendChild(image);
+
+                        const img = document.createElement("img")
+                        img.src = res.data.image
+                        document.querySelector(".result").appendChild(img)
+                    })
             })
     </script>
 </body>
